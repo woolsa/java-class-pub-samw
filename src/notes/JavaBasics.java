@@ -106,7 +106,7 @@ public class JavaBasics {
     oneSymbol++;
     System.out.println(oneSymbol);
     for (int i = 32; i < 127; i++) {
-      System.out.printf("%c%n", i);
+      System.out.printf("%c ", i);
     }
     /* Conditions */
     System.out.println("\n## Conditions");
