@@ -25,7 +25,7 @@ public class Ex2Driver {
     System.out.println(task3(numberArr, 75));
     task4(numberArr);
     task5(numberArr);
-    //task6();
+    task6();
     task7();
     System.out.println(task8(numberLst, 75));
     //task9();
