@@ -5,7 +5,8 @@ import java.util.Random;
 import java.util.Arrays;
 
 /**
- * @author yasiro01
+ * @author Sam Woollums
+ * @asssignment exercise1
  */
 public class Ex1Driver {
   public static void main(String args[]) {
@@ -120,12 +121,11 @@ public class Ex1Driver {
     rnd.setSeed(252);
     int[] randomNumbers = new int[100];
     for (int i = 0; i < randomNumbers.length; i++) {
-      randomNumbers[i] = rnd.nextInt(101-10);
+      randomNumbers[i] = rnd.nextInt(100) + 1;
     }
     Scanner keyboard = new Scanner(System.in);
     System.out.println("Enter a number");
-    String guessString = keyboard.nextLine();
-    int guess = Integer.parseInt(guessString);
+    Integer guess = keyboard.nextInt();
     boolean found = false;
     for (int index = 0; index < randomNumbers.length; ++index) {
         if (randomNumbers[index] == guess) {
