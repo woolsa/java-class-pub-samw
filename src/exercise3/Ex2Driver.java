@@ -1,7 +1,10 @@
 package exercise3;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -16,7 +19,7 @@ public class Ex2Driver {
    * main application function
    * @param args 
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     int[][] matrix1 = null;
     int[][] matrix2 = null;
     int[][] result = null;
@@ -63,7 +66,14 @@ public class Ex2Driver {
    * @throws java.io.FileNotFoundException 
    */
   public static void writeMatrix(int[][] matrix, String filename) throws FileNotFoundException {
-    throw new UnsupportedOperationException();
+    PrintWriter outputFile = new PrintWriter(filename);
+    for (int[] row: matrix) {
+      for (int item: row) {
+        outputFile.printf("%5d", item);
+        }
+    outputFile.println("");
+    }
+    outputFile.close();
   }
   /**
    * Read a matrix from a file
@@ -71,8 +81,26 @@ public class Ex2Driver {
    * @return matrix read from a file
    * @throws java.io.FileNotFoundException
    */
-  public static int[][] readFile(String filename) throws FileNotFoundException {
-    throw new UnsupportedOperationException();
+  public static int[][] readFile(String filename) throws FileNotFoundException, IOException {
+    BufferedReader inputFile = new BufferedReader(new FileReader(filename));
+    String line = inputFile.readLine();
+    String[] lineSplit = line.split(" ");
+    int rows = Integer.valueOf(lineSplit[0]);
+    int columns = Integer.valueOf(lineSplit[1]);
+    int[][] matrix = new int[rows][columns];
+    int lineCount = 0;
+    while ((line = inputFile.readLine()) != null) {
+        Scanner lineContent = new Scanner(line);
+        while (lineContent.hasNext()) {
+            lineContent.next();
+            String[] split = line.split(" ");
+            for (int j = 0; j < split.length; ++j)
+                matrix[lineCount][j] = Integer.valueOf(split[j]);
+            }
+        lineCount++;
+        } 
+    return matrix;
+            
     /*
     10. Open the input file and create a Scanner object to read its content
     20. Read two values (rows and columns) from the first line, if possible
@@ -89,6 +117,18 @@ public class Ex2Driver {
    * @return the resulting matrix
    */
   public static int[][] multiply(int[][] matrix1, int[][] matrix2) {
-    throw new UnsupportedOperationException();
+    int m1 = matrix1.length;
+    int n1 = matrix1[0].length;
+    int m2 = matrix2.length;
+    int n2 = matrix2[0].length;
+    int[][] matrix3 = new int[m1][n2];
+        for (int i = 0; i < m1; i++) {
+            for (int j = 0; j < n2; j++) {
+                for (int k = 0; k < n1; k++) {
+                    matrix3[i][j] += matrix1[i][k] * matrix2[k][j];
+                }
+            }
+        }
+    return matrix3;
   }
 }
