@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author yasiro01
  */
-public class Ex2Driver {
+public class Ex3Driver {
   public static final String PATH = "data/";
   /**
    * main application function
@@ -27,7 +27,7 @@ public class Ex2Driver {
       matrix1 = readFile(PATH + "matrix1.txt");
       matrix2 = readFile(PATH + "matrix2.txt");
     } catch (FileNotFoundException ex) {
-      Logger.getLogger(Ex2Driver.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+      Logger.getLogger(Ex3Driver.class.getName()).log(Level.SEVERE, ex.toString(), ex);
     }
     System.out.println("Matrix 1");
     printMatrix(matrix1);
@@ -36,7 +36,7 @@ public class Ex2Driver {
     if (matrix1[0].length == matrix2.length) {
       result = multiply(matrix1, matrix2);
     } else {
-      Logger.getLogger(Ex2Driver.class.getName()).log(Level.SEVERE, "{0}", "Impossible to multiply matrices");
+      Logger.getLogger(Ex3Driver.class.getName()).log(Level.SEVERE, "{0}", "Impossible to multiply matrices");
       System.exit(0);
     }
     System.out.println("Result");
@@ -44,7 +44,7 @@ public class Ex2Driver {
     try {
       writeMatrix(result, PATH + "result.txt");
     } catch (FileNotFoundException ex) {
-      Logger.getLogger(Ex2Driver.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+      Logger.getLogger(Ex3Driver.class.getName()).log(Level.SEVERE, ex.toString(), ex);
     }
   }
   /**
