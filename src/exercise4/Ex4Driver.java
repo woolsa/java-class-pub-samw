@@ -8,6 +8,7 @@ import java.util.HashMap;
  * @assignment Exercise4
  */
 public class Ex4Driver {
+
   /*
   Define a function that takes 1 integer as a parameter and returns an integer. Write 2 unit tests to verify the function validity.
     */

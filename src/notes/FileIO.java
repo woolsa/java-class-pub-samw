@@ -23,31 +23,42 @@ public class FileIO {
   public static final String PATH = "data/";
   public static void main(String[] args) {
     long start = 0, end = 0;
+//    try {
+//      start = System.currentTimeMillis();
+//      generateFileUsingBufferedWriter(PATH + "roster2.txt");
+//      end = System.currentTimeMillis();
+//    } catch (FileNotFoundException ex) {
+//      Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+//    } catch (IOException ex) {
+//      Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
+//    } finally {
+//      System.out.printf("Written a file using BufferedWriter in %d ms%n", end - start);
+//    }
+//    try {
+//      start = System.currentTimeMillis();
+//      generateFileUsingPrintWriter(PATH + "roster3.txt");
+//      end = System.currentTimeMillis();
+//    } catch (FileNotFoundException ex) {
+//      Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+//    } catch (IOException ex) {
+//      Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
+//    } finally {
+//      System.out.printf("Written a file using PrintWriter in %d ms%n", end - start);
+//    }
+//    try {
+//      start = System.currentTimeMillis();
+//      readFile(PATH + "roster.txt");
+//      end = System.currentTimeMillis();
+//    } catch (FileNotFoundException ex) {
+//      Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
+//    } catch (IOException ex) {
+//      Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
+//    } finally {
+//      System.out.printf("Read a file using BufferedReader in %d ms%n", end - start);
+//    }
     try {
       start = System.currentTimeMillis();
-      generateFile(PATH + "roster.txt");
-      end = System.currentTimeMillis();
-    } catch (FileNotFoundException ex) {
-      Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-    } catch (IOException ex) {
-      Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
-    } finally {
-      System.out.printf("Written a file using BufferedWriter in %d ms%n", end - start);
-    }
-    try {
-      start = System.currentTimeMillis();
-      usePrintWriter(PATH + "roster2.txt");
-      end = System.currentTimeMillis();
-    } catch (FileNotFoundException ex) {
-      Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-    } catch (IOException ex) {
-      Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
-    } finally {
-      System.out.printf("Written a file using PrintWriter in %d ms%n", end - start);
-    }
-    try {
-      start = System.currentTimeMillis();
-      readFile(PATH + "roster.txt");
+      readFileUsingSplit(PATH + "roster.txt");
       end = System.currentTimeMillis();
     } catch (FileNotFoundException ex) {
       Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,17 +67,17 @@ public class FileIO {
     } finally {
       System.out.printf("Read a file using BufferedReader in %d ms%n", end - start);
     }
-    try {
-      start = System.currentTimeMillis();
-      filterFileByState(PATH + "roster.txt", "IA");
-      end = System.currentTimeMillis();
-    } catch (FileNotFoundException ex) {
-      Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (IOException ex) {
-      Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
-    } finally {
-      System.out.printf("Read a file with regex in %d ms%n", end - start);
-    }
+//    try {
+//      start = System.currentTimeMillis();
+//      filterFileByState(PATH + "roster.txt", "IA");
+//      end = System.currentTimeMillis();
+//    } catch (FileNotFoundException ex) {
+//      Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
+//    } catch (IOException ex) {
+//      Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
+//    } finally {
+//      System.out.printf("Read a file with regex in %d ms%n", end - start);
+//    }
     
   }
   /**
@@ -75,26 +86,30 @@ public class FileIO {
    * @throws FileNotFoundException
    * @throws IOException 
    */
-  public static void generateFile(String filename) throws FileNotFoundException, IOException {
+  public static void generateFileUsingBufferedWriter(String filename) throws FileNotFoundException, IOException {
     Faker faker = new Faker();
+    /* BufferedWriter allows writing to a file */
     BufferedWriter outputFile = new BufferedWriter(new FileWriter(filename));
     for (int i = 0; i < 10000; i++) {
-      String str = String.format("%s, %s %s %s%n", faker.name().lastName(),
+      String str = String.format("%s, %s %s %s", faker.name().lastName(),
                                         faker.name().firstName(),
                                         faker.address().fullAddress(),
                                         faker.phoneNumber().phoneNumber());
-      outputFile.write(str);
+      /* BufferedWriter uses write method and it's recommended to format a string first */
+      outputFile.write(str + "\n");
     }
     outputFile.close();
   }
-  public static void usePrintWriter(String filename) throws IOException {
+  public static void generateFileUsingPrintWriter(String filename) throws IOException {
     Faker faker = new Faker();
+    /* PrinWriter is an easy-to-use wrapper for the FileWriter class */
     PrintWriter outputFile = new PrintWriter(new FileWriter(filename));
     for (int i = 0; i < 10000; i++) {
-      String str = String.format("%s, %s %s %s%n", faker.name().lastName(),
+      String str = String.format("%s, %s %s %s", faker.name().lastName(),
                                         faker.name().firstName(),
                                         faker.address().fullAddress(),
                                         faker.phoneNumber().phoneNumber());
+      /* With PrintWriter you can use print, println, and printf */
       outputFile.println(str);
     }
     outputFile.close();
@@ -106,15 +121,42 @@ public class FileIO {
    * @throws IOException 
    */
   public static void readFile(String filename) throws FileNotFoundException, IOException {
+    /* BufferedReader allows you to access file content */
     BufferedReader inputFile = new BufferedReader(new FileReader(filename));
     String line;
     while ((line = inputFile.readLine()) != null) {
+        /* Turn each line into a Scanner object and parse it one token at a time */
         Scanner lineContent = new Scanner(line);
         while (lineContent.hasNext()) {
             System.out.println(lineContent.next());
         }
     }
   }
+  /**
+   * Read file content and print it to the screen
+   * @param filename
+   * @throws FileNotFoundException
+   * @throws IOException 
+   */
+  public static void readFileUsingSplit(String filename) throws FileNotFoundException, IOException {
+    /* BufferedReader allows you to access file content */
+    BufferedReader inputFile = new BufferedReader(new FileReader(filename));
+    String line;
+    while ((line = inputFile.readLine()) != null) {
+        /* Turn each line into an array of Strings and print it */
+        String[] lineContent = line.split(",");
+        for (String item: lineContent) {
+          System.out.println(item);
+        }
+    }
+  }
+  /**
+   * Read file and filter its content using regular expressions
+   * @param filename
+   * @param state
+   * @throws FileNotFoundException
+   * @throws IOException 
+   */
   public static void filterFileByState(String filename, String state) throws FileNotFoundException, IOException {
     BufferedReader inputFile = new BufferedReader(new FileReader(filename));
     String line;
@@ -125,5 +167,64 @@ public class FileIO {
           System.out.printf("%s %s%n", m.group(2), m.group(1));
         }
     }
+  }
+  /**
+   * Count lines in a file
+   * @param filename
+   * @return
+   * @throws FileNotFoundException
+   * @throws IOException 
+   */
+  public static int countLines(String filename) throws FileNotFoundException, IOException {
+    int linesInFile = 0;
+    BufferedReader inputFileContent = new BufferedReader(new FileReader(filename));
+    while (inputFileContent.readLine() != null) {
+      linesInFile++;
+    }
+    return linesInFile;
+  }
+  /**
+   * Calculate sum of all numbers in a file
+   * @param filename
+   * @return
+   * @throws FileNotFoundException
+   * @throws IOException 
+   */
+  public static int sumNumbers(String filename) throws FileNotFoundException, IOException {
+    int result = 0;
+    BufferedReader inputFileContent = new BufferedReader(new FileReader(filename));
+    String line;
+    while ((line = inputFileContent.readLine()) != null) {
+      Scanner lineContent = new Scanner(line);
+      while (lineContent.hasNextInt()) {
+        result = result + lineContent.nextInt();
+      }
+    }
+    return result;
+  }
+  /**
+   * Get dimensions of a matrix from file content
+   * @param filename
+   * @return
+   * @throws FileNotFoundException
+   * @throws IOException 
+   */
+  public static int[] getDimensions(String filename) throws FileNotFoundException, IOException {
+    int[] dimensions = new int[2];
+    int row = 0, col = 0;
+    BufferedReader inputFileContent = new BufferedReader(new FileReader(filename));
+    String line;
+    while ((line = inputFileContent.readLine()) != null) {
+      row++;
+      Scanner lineContent = new Scanner(line);
+      col = 0;
+      while (lineContent.hasNextInt()) {
+        col++;
+        lineContent.nextInt();
+      }
+    }
+    dimensions[0] = row;
+    dimensions[1] = col;
+    return dimensions;
   }
 }

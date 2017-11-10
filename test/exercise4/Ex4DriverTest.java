@@ -221,6 +221,5 @@ public class Ex4DriverTest {
         expResult = 6;
         result = instance.task10(hashbrown);
         assertEquals(expResult, result);
-    }
-    
+    } 
 }
