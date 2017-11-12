@@ -1,5 +1,6 @@
 package exercise6;
 
+import java.io.IOException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,9 +14,10 @@ import static org.junit.Assert.*;
  */
 public class KangarooMobTest {
   KangarooMob instance1 = new KangarooMob("data/zoo1.txt");
-  KangarooMob instance2 = new KangarooMob("data/zoo2.txt");
+  KangarooMob instance2;
   
-  public KangarooMobTest() {
+  public KangarooMobTest() throws IOException {
+        this.instance2 = new KangarooMob("data/zoo2.txt");
   }
   
   @BeforeClass

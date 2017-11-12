@@ -1,5 +1,6 @@
 package exercise6;
 
+import java.io.IOException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,9 +14,10 @@ import static org.junit.Assert.*;
  */
 public class LemurConspiracyTest {
   LemurConspiracy instance1 = new LemurConspiracy("data/zoo1.txt");
-  LemurConspiracy instance2 = new LemurConspiracy("data/zoo2.txt");
+  LemurConspiracy instance2;
   
-  public LemurConspiracyTest() {
+  public LemurConspiracyTest() throws IOException {
+        this.instance2 = new LemurConspiracy("data/zoo2.txt");
   }
   
   @BeforeClass
