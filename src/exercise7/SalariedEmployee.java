@@ -22,11 +22,11 @@ public void setSalary(double input) {
 
     @Override
     public double getNetPay() {
-    return salary;
+    return salary * (1/52);
 }
 
     @Override
     public void printWeeklyCheck() {
-    System.out.printf("%.2f%n", getNetPay()/52);
+    System.out.printf("%.2f%n", getNetPay());
 }
 }
